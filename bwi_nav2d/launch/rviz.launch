@@ -1,6 +1,6 @@
 <launch>
   <arg name="config" default="nav_eband" />
-  <arg name="config_file" default="$(find bwi_nav2d)/rviz/$(arg config).rviz" />
+  <arg name="config_file" default="$(find bwi_nav2d)/param/$(arg config).rviz" />
   <node name="rviz" pkg="rviz" type="rviz"
         args="-d $(arg config_file)"
         launch-prefix="$(optenv OPTIRUN_LAUNCH_PREFIX)" />
