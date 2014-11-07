@@ -6,7 +6,7 @@ Experimental ROS packages to support Nav2D. The following code both tests and pe
 #Installation
 In order to take advantage of this code, you must do the following:
 
-##CMakeList
+##Gtkmm
 You must install Gtkmm 2.4.
 
 ```bash
