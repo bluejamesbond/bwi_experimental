@@ -1,5 +1,5 @@
 cmake_minimum_required(VERSION 2.8.3)
-project(nav2d_remote)
+project(bwi_nav2d)
 
 ## Find catkin macros and libraries
 find_package(catkin REQUIRED COMPONENTS
@@ -35,7 +35,7 @@ target_link_libraries(emulate_joy ${catkin_LIBRARIES} ${GTKMM_LIBRARIES} ${SIGC2
 #############
 
 ## Mark executables and/or libraries for installation
-install(TARGETS emulate_joy sim_joy
+install(TARGETS emulate_joy
   RUNTIME DESTINATION ${CATKIN_PACKAGE_BIN_DESTINATION}
 )
 
