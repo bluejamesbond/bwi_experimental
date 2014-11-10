@@ -37,7 +37,8 @@ private:
     void on_back_button_click();
     void on_left_button_click();
     void on_right_button_click();
-    void on_rotate_button_click();
+    void on_stop_button_click();
+    void on_explore_button_click();
 
     ros::NodeHandle mNode;
     ros::Publisher mCommandPublisher;
@@ -89,11 +90,12 @@ void Teleoperator::showJoyEmulator()
     Gtk::Main kit(argc, argcc);
     Gtk::Window window;
 
+    Gtk::Button exploreButton("Explore");
     Gtk::Button frontButton("↑");
     Gtk::Button leftButton("←");
     Gtk::Button rightButton("→");
     Gtk::Button backButton("↓");
-    Gtk::Button rotateButton("↻");
+    Gtk::Button stopButton("■");
 
     Gtk::VBox full;
     Gtk::HBox row1;
@@ -107,15 +109,17 @@ void Teleoperator::showJoyEmulator()
     window.set_title("Joy Stick Emulator");
     window.set_position(Gtk::WIN_POS_CENTER);
 
+    exploreButton.signal_clicked().connect(sigc::mem_fun(*this, &Teleoperator::on_explore_button_click));
     frontButton.signal_clicked().connect(sigc::mem_fun(*this, &Teleoperator::on_front_button_click));
     backButton.signal_clicked().connect(sigc::mem_fun(*this, &Teleoperator::on_back_button_click));
     leftButton.signal_clicked().connect(sigc::mem_fun(*this, &Teleoperator::on_left_button_click));
     rightButton.signal_clicked().connect(sigc::mem_fun(*this, &Teleoperator::on_right_button_click));
-    rotateButton.signal_clicked().connect(sigc::mem_fun(*this, &Teleoperator::on_rotate_button_click));
+    stopButton.signal_clicked().connect(sigc::mem_fun(*this, &Teleoperator::on_stop_button_click));
 
+    row1.pack_start(exploreButton, Gtk::PACK_EXPAND_WIDGET);
     row1.pack_start(frontButton, Gtk::PACK_EXPAND_WIDGET);
     row2.pack_start(leftButton, Gtk::PACK_EXPAND_WIDGET);
-    row2.pack_start(rotateButton, Gtk::PACK_EXPAND_WIDGET);
+    row2.pack_start(stopButton, Gtk::PACK_EXPAND_WIDGET);
     row2.pack_start(rightButton, Gtk::PACK_EXPAND_WIDGET);
     row3.pack_start(backButton, Gtk::PACK_EXPAND_WIDGET);
 
@@ -147,6 +151,17 @@ void Teleoperator::on_left_button_click(){
     mCommandPublisher.publish(cmd);
 }
 
+void Teleoperator::on_explore_button_click(){
+    ROS_WARN("Exploring");
+    nav2d_navigator::SendCommand srv;
+    srv.request.command = NAV_COM_EXPLORE;
+    if(!mExploreClient.call(srv))
+    {
+        ROS_ERROR("Failed to send EXPLORE_COMMAND to Explore-Client.");
+    }
+    return;
+}
+
 void Teleoperator::on_right_button_click(){
     ROS_WARN("Moving right");
     nav2d_operator::cmd cmd;
@@ -165,8 +180,8 @@ void Teleoperator::on_back_button_click(){
     mCommandPublisher.publish(cmd);
 }
 
-void Teleoperator::on_rotate_button_click(){
-    ROS_WARN("Rotating");
+void Teleoperator::on_stop_button_click(){
+    ROS_WARN("Stoping");
     nav2d_operator::cmd cmd;
     cmd.Turn = 0;
     cmd.Velocity = 0;
