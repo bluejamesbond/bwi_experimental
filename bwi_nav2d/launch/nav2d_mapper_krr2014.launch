@@ -52,7 +52,7 @@
 
   <!-- Pioneer model for fancy visualization -->
   <!-- Comment this out if you do not have the package 'p2os' available! -->
-  <!-- <include file="$(find p2os_urdf)/launch/pioneer3at_urdf.launch" /> -->
+  <!--<include file="$(find p2os_urdf)/launch/pioneer3at_urdf.launch" /> -->
 
   <!-- Start the joystick-driver and remote-controller for operation-->
   <node name="emulate_joy" pkg="bwi_nav2d" type="emulate_joy" />
