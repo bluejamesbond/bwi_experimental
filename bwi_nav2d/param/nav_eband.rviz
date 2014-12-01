@@ -7,8 +7,11 @@ Panels:
         - /Global Options1
         - /Costmap1
         - /Map2
+        - /GridCells1
+        - /Map3
+        - /Polygon1
       Splitter Ratio: 0.496795
-    Tree Height: 533
+    Tree Height: 389
   - Class: rviz/Selection
     Name: Selection
   - Class: rviz/Tool Properties
@@ -47,20 +50,6 @@ Visualization Manager:
       Plane: XY
       Plane Cell Count: 100
       Reference Frame: <Fixed Frame>
-      Value: true
-    - Alpha: 1
-      Class: rviz/GridCells
-      Color: 0; 0; 255
-      Enabled: true
-      Name: Desired
-      Topic: /Operator/desired
-      Value: true
-    - Alpha: 1
-      Class: rviz/GridCells
-      Color: 25; 255; 0
-      Enabled: true
-      Name: Corrected
-      Topic: /Operator/route
       Value: true
     - Alpha: 1
       Class: rviz/RobotModel
@@ -117,12 +106,37 @@ Visualization Manager:
           Show Axes: false
           Show Trail: false
           Value: true
+        chassis_back_left_standoff_link:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
+        chassis_back_right_standoff_link:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
         chassis_base_plate_link:
           Alpha: 1
           Show Axes: false
           Show Trail: false
           Value: true
+        chassis_front_left_standoff_link:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
+        chassis_front_right_standoff_link:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
         chassis_left_plate_link:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
+        chassis_mount_plate_link:
           Alpha: 1
           Show Axes: false
           Show Trail: false
@@ -271,6 +285,28 @@ Visualization Manager:
       Name: Map
       Topic: /move_base/global_costmap/costmap
       Value: true
+    - Alpha: 1
+      Class: rviz/GridCells
+      Color: 25; 255; 0
+      Enabled: true
+      Name: GridCells
+      Topic: /Navigator/plan
+      Value: true
+    - Alpha: 0.7
+      Class: rviz/Map
+      Color Scheme: map
+      Draw Behind: false
+      Enabled: true
+      Name: Map
+      Topic: /Operator/local_map/costmap
+      Value: true
+    - Alpha: 1
+      Class: rviz/Polygon
+      Color: 25; 255; 0
+      Enabled: true
+      Name: Polygon
+      Topic: /hokuyo_laser_filters/footprint
+      Value: true
   Enabled: true
   Global Options:
     Background Color: 48; 48; 48
@@ -286,35 +322,34 @@ Visualization Manager:
       Topic: /initialpose
     - Class: rviz/SetGoal
       Topic: /move_base_simple/goal
-    - Class: rviz/FocusCamera
-    - Class: rviz/Measure
-      Topic: /goal
-    - Class: rviz/PublishPoint
-      Single click: true
-      Topic: /clicked_point
   Value: true
   Views:
     Current:
       Class: rviz/Orbit
-      Distance: 60.6914
+      Distance: 31.5676
+      Enable Stereo Rendering:
+        Stereo Eye Separation: 0.06
+        Stereo Focal Distance: 1
+        Swap Stereo Eyes: false
+        Value: false
       Focal Point:
-        X: 1.77601
-        Y: 0.464459
-        Z: 3.59143
+        X: 14.0279
+        Y: 13.2973
+        Z: 7.72899
       Name: Current View
       Near Clip Distance: 0.01
-      Pitch: 1.5698
+      Pitch: 1.2748
       Target Frame: <Fixed Frame>
       Value: Orbit (rviz)
-      Yaw: 4.70536
+      Yaw: 4.65036
     Saved: ~
 Window Geometry:
   Displays:
     collapsed: false
-  Height: 1061
+  Height: 848
   Hide Left Dock: false
   Hide Right Dock: false
-  QMainWindow State: 000000ff00000000fd00000004000000000000015d000003d5fc0200000005fb0000001200530065006c0065006300740069006f006e00000001e10000009b0000005300fffffffb000000120056006900650077007300200054006f006f02000001df000002110000018500000122fb000000200054006f006f006c002000500072006f0070006500720074006900650073003203000002880000011d000002210000017afb000000100044006900730070006c0061007900730100000036000002a0000000b700fffffffb0000001e0054006f006f006c002000500072006f007000650072007400690065007301000002dc0000012f0000005300ffffff0000000100000105000003d5fc0200000003fb0000001e0054006f006f006c002000500072006f00700065007200740069006500730100000041000000780000000000000000fb0000000a005600690065007700730000000036000003d50000009b00fffffffb0000001200530065006c0065006300740069006f006e010000025a000000b200000000000000000000000200000490000000a9fc0100000001fb0000000a00560069006500770073030000004e00000080000002e10000019700000003000004a00000003efc0100000002fb0000000800540069006d00650000000000000004a00000024600fffffffb0000000800540069006d006501000000000000045000000000000000000000060b000003d500000004000000040000000800000008fc0000000100000002000000010000000a0054006f006f006c00730100000000ffffffff0000000000000000
+  QMainWindow State: 000000ff00000000fd00000004000000000000015d0000030afc0200000005fb0000001200530065006c0065006300740069006f006e00000001e10000009b0000006400fffffffb000000120056006900650077007300200054006f006f02000001df000002110000018500000122fb000000200054006f006f006c002000500072006f0070006500720074006900650073003203000002880000011d000002210000017afb000000100044006900730070006c006100790073010000002800000214000000dd00fffffffb0000001e0054006f006f006c002000500072006f00700065007200740069006500730100000242000000f00000006400ffffff0000000100000105000003d5fc0200000003fb0000001e0054006f006f006c002000500072006f00700065007200740069006500730100000041000000780000000000000000fb0000000a005600690065007700730000000036000003d5000000b000fffffffb0000001200530065006c0065006300740069006f006e010000025a000000b200000000000000000000000200000490000000a9fc0100000001fb0000000a00560069006500770073030000004e00000080000002e10000019700000003000004a00000003efc0100000002fb0000000800540069006d00650000000000000004a0000002f600fffffffb0000000800540069006d006501000000000000045000000000000000000000044c0000030a00000004000000040000000800000008fc0000000100000002000000010000000a0054006f006f006c00730100000000ffffffff0000000000000000
   Selection:
     collapsed: false
   Time:
@@ -323,6 +358,6 @@ Window Geometry:
     collapsed: false
   Views:
     collapsed: false
-  Width: 1902
-  X: 0
-  Y: 17
+  Width: 1455
+  X: 237
+  Y: 113

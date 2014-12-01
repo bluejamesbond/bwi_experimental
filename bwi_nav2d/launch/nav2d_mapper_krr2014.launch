@@ -58,6 +58,6 @@
   <node name="emulate_joy" pkg="bwi_nav2d" type="emulate_joy" />
 
   <!-- RVIZ to view the visualization -->
-  <include file="$(find segbot_navigation)/launch/rviz.launch" />
+  <include file="$(find bwi_nav2d)/launch/rviz.launch" />
 
 </launch>
