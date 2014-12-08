@@ -55,7 +55,7 @@
   <!--<include file="$(find p2os_urdf)/launch/pioneer3at_urdf.launch" /> -->
 
   <!-- Start the joystick-driver and remote-controller for operation-->
-  <node name="emulate_joy" pkg="bwi_nav2d" type="emulate_joy" />
+  <!-- <node name="emulate_joy" pkg="bwi_nav2d" type="emulate_joy" /> -->
 
   <!-- RVIZ to view the visualization -->
   <include file="$(find bwi_nav2d)/launch/rviz.launch" />
