@@ -20,15 +20,17 @@ map_type: costmap
 track_unknown_space: true
 
 transform_tolerance: 0.3
-obstacle_range: 4.0
+obstacle_range: 6.0
 min_obstacle_height: 0.0
-max_obstacle_height: 2.0
+max_obstacle_height: 1.0
 raytrace_range: 4.5
 
-robot_radius: 0.4
-inflation_radius: 0.75
+robot_radius: 0.33
+inflation_radius: 0.66
 cost_scaling_factor: 2.0
 lethal_cost_threshold: 100
 observation_sources: scan
 scan: {data_type: LaserScan, expected_update_rate: 0.4,
-  observation_persistence: 0.0, marking: true, clearing: true, max_obstacle_height: 0.4, min_obstacle_height: 0.08}
+  observation_persistence: 0.0, marking: true, clearing: true,
+  max_obstacle_height: 1.0, min_obstacle_height: 0.08, topic: scan,
+  sensor_frame: nav_hokuyo_laser_link}

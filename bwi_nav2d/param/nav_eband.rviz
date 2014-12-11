@@ -275,7 +275,7 @@ Visualization Manager:
       Name: Costmap
       Topic: /Operator/local_map/costmap
       Value: true
-    - Alpha: 0.07
+    - Alpha: 1
       Class: rviz/GridCells
       Color: 25; 255; 0
       Enabled: true
