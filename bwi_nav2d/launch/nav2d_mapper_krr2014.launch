@@ -10,17 +10,17 @@
   <rosparam file="$(find bwi_nav2d)/param/ros.yaml"/>
 
   <!-- launch gazebo simulation environment and map server -->
-  <include file="$(find utexas_gdc)/launch/3ne.launch" />
+  <include file="$(find bwi_nav2d)/launch/3ne.launch" />
   <!-- <include file="$(find utexas_gdc)/launch/3ne_map.launch" /> -->
 
   <!-- launch the base robot + autonomous navigation -->
-  <include file="$(find segbot_gazebo)/launch/segbot_mobile_base.launch">
+  <include file="$(find bwi_nav2d)/launch/segbot_mobile_base.launch">
     <arg name="launch_localization" value="false" />
     <arg name="use_fake_localization" value="false" />
     <arg name="launch_move_base" value="false" />
     <arg name="use_full_gazebo_model" value="false" />
     <arg name="x" value="0" />
-    <arg name="y" value="3" />
+    <arg name="y" value="5" />
   </include>
 
   <!-- Start the Operator to control the simulated robot -->

@@ -13,7 +13,7 @@
 <!--   <include file="$(find utexas_gdc)/launch/3ne.launch" /> -->
 
   <!-- launch the base robot + autonomous navigation -->
-  <include file="$(find segbot_gazebo)/launch/multiple_segbots.launch" />
+  <include file="$(find bwi_nav2d)/launch/multiple_segbots.launch" />
 
   <node name="R0_MapAlign" pkg="tf" type="static_transform_publisher" args="0 0 0 0 0 0 /map /robot_0/map 100"/>
 
