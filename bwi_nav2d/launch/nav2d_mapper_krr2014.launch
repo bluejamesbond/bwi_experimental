@@ -19,7 +19,7 @@
     <arg name="use_fake_localization" value="false" />
     <arg name="launch_move_base" value="false" />
     <arg name="use_full_gazebo_model" value="false" />
-    <arg name="x" value="0" />
+    <arg name="x" value="-4" />
     <arg name="y" value="5" />
   </include>
 
@@ -41,21 +41,7 @@
 
   <node name="GetMap" pkg="nav2d_navigator" type="get_map_client" />
   <node name="Explore" pkg="nav2d_navigator" type="explore_client" />
-  <node name="SetGoal" pkg="nav2d_navigator" type="set_goal_client" />
-
-  <!-- launch the simulation door handler -->
-  <!--
-  <include file="$(find segbot_simulation_apps)/launch/door_handler.launch">
-    <arg name="door_file" value="$(arg door_file)" />
-  </include>
-  -->
-
-  <!-- Pioneer model for fancy visualization -->
-  <!-- Comment this out if you do not have the package 'p2os' available! -->
-  <!--<include file="$(find p2os_urdf)/launch/pioneer3at_urdf.launch" /> -->
-
-  <!-- Start the joystick-driver and remote-controller for operation-->
-  <!-- <node name="emulate_joy" pkg="bwi_nav2d" type="emulate_joy" /> -->
+  <node name="SetGoal" pkg="nav2d_navigator" type="set_goal_client" />>
 
   <!-- RVIZ to view the visualization -->
   <include file="$(find bwi_nav2d)/launch/rviz.launch" />

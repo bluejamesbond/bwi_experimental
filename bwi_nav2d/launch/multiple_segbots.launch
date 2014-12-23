@@ -1,65 +1,90 @@
 <launch>
 
-  <arg name="robot_configuration" default="$(find segbot_bringup)/launch/includes/auxiliary.segbot_hokuyo.launch.xml" />
-  <arg name="use_full_gazebo_model" default="true" />
-
-  <!-- launch the simulated world -->
-  <include file="$(find segbot_gazebo)/launch/segbot_test_world.launch" />
-
-  <!-- launch the map server for the simulated world -->
-  <include file="$(find segbot_gazebo)/launch/segbot_test_world_map_server.launch" />
-
   <group ns="robot_0">
-    <include file="$(find segbot_gazebo)/launch/segbot_mobile_base.launch">
-      <arg name="robotid" value="robot_0" />
-      <arg name="configuration_file" value="$(arg robot_configuration)" />
-      <arg name="x" value="9" />
-      <arg name="y" value="11" />
-      <arg name="tf_prefix" value="robot_0" />
-      <arg name="launch_localization" value="false" />
-      <arg name="launch_move_base" value="false" />
-      <arg name="use_full_gazebo_model" value="$(arg use_full_gazebo_model)" />
-    </include>
+    <param name="robot_id" value="1" />
     <param name="tf_prefix" type="string" value="robot_0"/>
     <rosparam file="$(find bwi_nav2d)/param/ros.yaml"/>
-    <node pkg="p2os_urdf" type="publisher" name="publisher"/>
+
+    <include file="$(find bwi_nav2d)/launch/segbot_mobile_base.launch">
+      <arg name="robotid" value="robot_0" />
+      <arg name="x" value="-8" />
+      <arg name="y" value="8" />
+      <arg name="tf_prefix" value="robot_0" />
+      <arg name="launch_localization" value="false" />
+      <arg name="use_fake_localization" value="false" />
+      <arg name="launch_move_base" value="false" />
+      <arg name="use_full_gazebo_model" value="false" />
+    </include>
+
     <node name="Mapper" pkg="nav2d_karto" type="mapper">
       <remap from="karto_in" to="/shared_scans_r2"/>
       <remap from="karto_out" to="/shared_scans_r1"/>
       <rosparam file="$(find bwi_nav2d)/param/mapper.yaml"/>
     </node>
-    <node pkg="robot_state_publisher" type="state_publisher" name="robot_state_publisher">
-        <param name="publish_frequency" type="double" value="30.0"/>
+
+    <node name="emulate_joy" pkg="bwi_nav2d" type="emulate_joy" />
+
+    <node name="Operator" pkg="nav2d_operator" type="operator" >
+      <rosparam file="$(find bwi_nav2d)/param/operator.yaml"/>
+      <rosparam file="$(find bwi_nav2d)/param/costmap.yaml" ns="local_map" />
     </node>
+
+    <!-- Start the Navigator to move the robot autonomously -->
+    <node name="Navigator" pkg="nav2d_navigator" type="navigator">
+      <rosparam name="robot_id" value="1" />
+      <rosparam name="exploration_strategy" value="MultiWavefrontPlanner" />
+      <rosparam file="$(find bwi_nav2d)/param/navigator.yaml"/>
+    </node>
+
+    <node name="GetMap" pkg="nav2d_navigator" type="get_map_client" />
+    <node name="Explore" pkg="nav2d_navigator" type="explore_client" />
+    <node name="SetGoal" pkg="nav2d_navigator" type="set_goal_client" />
+
   </group>
 
   <group ns="robot_1">
-    <include file="$(find segbot_gazebo)/launch/segbot_mobile_base.launch">
-      <arg name="robotid" value="robot_1" />
-      <arg name="configuration_file" value="$(arg robot_configuration)" />
-      <arg name="x" value="0" />
-      <arg name="y" value="5.1" />
-      <arg name="tf_prefix" value="robot_1" />
-      <arg name="launch_localization" value="false" />
-      <arg name="launch_move_base" value="false" />
-      <arg name="use_full_gazebo_model" value="$(arg use_full_gazebo_model)" />
-    </include>
+    <param name="robot_id" value="2" />
     <param name="tf_prefix" type="string" value="robot_1"/>
     <rosparam file="$(find bwi_nav2d)/param/ros.yaml"/>
-    <node pkg="p2os_urdf" type="publisher" name="publisher"/>
+
+    <include file="$(find bwi_nav2d)/launch/segbot_mobile_base.launch">
+      <arg name="robotid" value="robot_1" />
+      <arg name="x" value="-4" />
+      <arg name="y" value="5" />
+      <arg name="tf_prefix" value="robot_1" />
+      <arg name="launch_localization" value="false" />
+      <arg name="use_fake_localization" value="false" />
+      <arg name="launch_move_base" value="false" />
+      <arg name="use_full_gazebo_model" value="false" />
+    </include>
+
     <node name="Mapper" pkg="nav2d_karto" type="mapper">
       <remap from="karto_in" to="/shared_scans_r1"/>
       <remap from="karto_out" to="/shared_scans_r2"/>
       <rosparam file="$(find bwi_nav2d)/param/mapper.yaml"/>
     </node>
-    <node pkg="robot_state_publisher" type="state_publisher" name="robot_state_publisher">
-      <param name="publish_frequency" type="double" value="30.0"/>
+
+    <node name="Operator" pkg="nav2d_operator" type="operator" >
+      <rosparam file="$(find bwi_nav2d)/param/operator.yaml"/>
+      <rosparam file="$(find bwi_nav2d)/param/costmap.yaml" ns="local_map" />
     </node>
+
+    <node name="emulate_joy" pkg="bwi_nav2d" type="emulate_joy" />
+
+    <!-- Start the Navigator to move the robot autonomously -->
+    <node name="Navigator" pkg="nav2d_navigator" type="navigator">
+      <rosparam name="robot_id" value="2" />
+      <rosparam name="exploration_strategy" value="MultiWavefrontPlanner" />
+      <rosparam file="$(find bwi_nav2d)/param/navigator.yaml"/>
+    </node>
+
+    <node name="GetMap" pkg="nav2d_navigator" type="get_map_client" />
+    <node name="Explore" pkg="nav2d_navigator" type="explore_client" />
+    <node name="SetGoal" pkg="nav2d_navigator" type="set_goal_client" />
+
   </group>
 
   <!-- launch vizualization -->
-  <node name="rviz" pkg="rviz" type="rviz"
-    args="-d $(find segbot_gazebo)/config/multiple_segbots.rviz"
-        launch-prefix="$(optenv OPTIRUN_LAUNCH_PREFIX)" />
+  <node name="RVIZ" pkg="rviz" type="rviz" args=" -d $(find nav2d_tutorials)/param/tutorial4.rviz" />
 
 </launch>

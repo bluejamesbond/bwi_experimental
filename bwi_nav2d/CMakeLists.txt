@@ -5,8 +5,23 @@ project(bwi_nav2d)
 find_package(catkin REQUIRED COMPONENTS
   nav2d_navigator
   nav2d_operator
+  message_generation
+  tf
+  pluginlib
+  actionlib
+  geometry_msgs
+  actionlib_msgs
   roscpp
   sensor_msgs
+)
+
+add_service_files(FILES AutoLocalizeRobot.srv)
+
+## Generate added messages and services with any dependencies listed here
+generate_messages(
+  DEPENDENCIES
+  actionlib_msgs
+  geometry_msgs
 )
 
 ###################################
@@ -14,6 +29,12 @@ find_package(catkin REQUIRED COMPONENTS
 ###################################
 catkin_package(
   CATKIN_DEPENDS
+    roscpp
+    message_runtime
+    tf
+    actionlib
+    actionlib_msgs
+      geometry_msgs
     nav2d_navigator
     nav2d_operator
     roscpp
@@ -24,18 +45,27 @@ catkin_package(
 ## Build ##
 ###########
 link_directories(${SIGC2_LIBRARY_DIRS} ${GTKMM_LIBRARY_DIRS})
-include_directories(${catkin_INCLUDE_DIRS} ${GTKMM_INCLUDE_DIRS} ${SIGC2_LIBRARY_DIRS})
+include_directories(${catkin_INCLUDE_DIRS} ${GTKMM_INCLUDE_DIRS} ${Boost_INCLUDE_DIRS} ${SIGC2_LIBRARY_DIRS})
 
 add_executable(emulate_joy src/emulate_joy.cpp)
 add_dependencies(emulate_joy ${catkin_EXPORTED_TARGETS})
 target_link_libraries(emulate_joy ${catkin_LIBRARIES} ${GTKMM_LIBRARIES} ${SIGC2_LIBRARIES})
+
+add_executable(windowed_sim_joy src/windowed_sim_joy.cpp)
+add_dependencies(windowed_sim_joy ${catkin_EXPORTED_TARGETS})
+target_link_libraries(windowed_sim_joy ${catkin_LIBRARIES} ${GTKMM_LIBRARIES} ${Boost_LIBRARIES}${SIGC2_LIBRARIES})
+
+add_executable(auto_localize_robot src/auto_localize_robot.cpp)
+add_dependencies(auto_localize_robot bwi_nav2d_generate_messages_cpp)
+
+target_link_libraries(auto_localize_robot ${catkin_LIBRARIES})
 
 #############
 ## Install ##
 #############
 
 ## Mark executables and/or libraries for installation
-install(TARGETS emulate_joy
+install(TARGETS emulate_joy emulate_joy
   RUNTIME DESTINATION ${CATKIN_PACKAGE_BIN_DESTINATION}
 )
 
